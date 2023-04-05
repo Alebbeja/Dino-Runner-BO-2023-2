@@ -1,0 +1,45 @@
+import pygame
+import random
+
+class Cloud:
+  SCREEN_WIDTH = 600
+  SCREEN_HEIGHT = 150
+  GROUND_HEIGHT = 20
+  GRAVITY = 0.6
+  JUMP_VELOCITY = -10
+  BLACK = (0, 0, 0)
+  WHITE = (255, 255, 255)
+  GREEN = (0, 255, 0)
+  BLUE = (0, 0, 255)
+  CLOUD_WIDTH = 64
+  CLOUD_HEIGHT = 32
+  MAX_CLOUDS = 6
+  CLOUD_SPEED = 2
+
+  def __init__(self, x_pos):
+        self.x_pos = x_pos
+        self.y_pos = random.randint(20, 80)
+        self.image = pygame.image.load("Cloud.png")
+        self.rect = self.image.get_rect()
+        self.rect.x = self.x_pos
+        self.rect.y = self.y_pos
+
+  def draw(self, screen):
+        screen.blit(self.image, self.rect)
+
+  def update(self):
+        self.x_pos -= CLOUD_SPEED
+        self.rect.x = self.x_pos
+
+  def offscreen(self):
+        return self.x_pos < -CLOUD_WIDTH
+  
+  def draw(self, screen):
+        for cloud in self.clouds:
+            cloud.draw(screen)
+
+  def update(self):
+        for cloud in self.clouds:
+            cloud.update()
+            if cloud.offscreen():
+                self.clouds.remove(cloud)
