@@ -7,11 +7,15 @@ class Obstacle:
         self.rect = self.image.get_rect()
         self.rect.x = SCREEN_WIDTH
 
-    def draw(self, game_speed, player):
+    def update(self, game_speed, player):
+        screen.blit(self.imagen, self.rect)
         self.rect.x -= game_speed
         if self.rect.colliderect(player.dino_rect):
+            if not self.player.shield:
             pygame.time.delay(300)
             player.dino_dead = True
 
-    def update(self, screen):
+    def draw(self, screen):
         screen.blit(self.imagen, self.rect)
+
+
